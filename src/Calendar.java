@@ -18,4 +18,9 @@ public class Calendar {
             System.out.println("다시 입력해주세요");
         }
     }
+
+    private final int[] MONTH_DAYS_LIST = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    public int getMonthDate(int month) {
+        return MONTH_DAYS_LIST[month-1];
+    }
 }
