@@ -1,35 +1,38 @@
-import java.util.Scanner;
-
 public class Calendar {
 
-    public static void main(String[] args) {
+    private final int[] DAYS_LIST = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private final int[] LEAP_YEAR_DAYS_LIST = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-        Scanner sc = new Scanner(System.in);
-        Calendar cal = new Calendar();
-        String PROMPT = "cal > ";
-        int month, repeat;
-
-        System.out.println("반복 횟수 입력");
-        repeat = sc.nextInt();
-
-        for (int i = 0; i < repeat; i++) {
-
-            System.out.println("보고싶은 월을 입력하세요");
-            month = sc.nextInt();
-
-            if (1 <= month && 12 >= month) {
-                System.out.print(PROMPT);
-                System.out.printf("%d 월의 일수는 %d 입니다 \n", month, cal.getMonthDate(month));
-            } else {
-                System.out.println("다시 입력해주세요");
-            }
-        }
-        sc.close();
-        System.out.println("프로그램 종료");
+    public boolean isLeapYear(int year){
+        if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+            return true;
+        else
+            return false;
     }
 
-    private final int[] MONTH_DAYS_LIST = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    public int getMonthDate(int month) {
-        return MONTH_DAYS_LIST[month-1];
+    public int getMonthMaxDay(int year, int month) {
+        if (isLeapYear(year)){
+            return LEAP_YEAR_DAYS_LIST[month-1];
+        } else {
+            return DAYS_LIST[month-1];
+        }
+
+    }
+
+    public void printCalendar(int year,int month) {
+        System.out.printf("   <<%4d년 %2d월>> \n", year, month);
+
+        System.out.println(" SU MO TU WE TH FR SA");
+        System.out.println("---------------------");
+
+
+        int maxDay = getMonthMaxDay(year, month);
+        for (int i = 1; i <= maxDay; i++) {
+            System.out.printf("%3d", i);
+            if(i % 7 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
     }
 }
