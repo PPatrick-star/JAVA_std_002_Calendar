@@ -6,6 +6,7 @@ public class Calendar {
 
         Scanner sc = new Scanner(System.in);
         Calendar cal = new Calendar();
+        String PROMPT = "cal > ";
         int month, repeat;
 
         System.out.println("반복 횟수 입력");
@@ -17,8 +18,8 @@ public class Calendar {
             month = sc.nextInt();
 
             if (1 <= month && 12 >= month) {
-
-                System.out.printf("%d 월의 일수는 %d 입니다", month, cal.getMonthDate(month));
+                System.out.print(PROMPT);
+                System.out.printf("%d 월의 일수는 %d 입니다 \n", month, cal.getMonthDate(month));
             } else {
                 System.out.println("다시 입력해주세요");
             }
