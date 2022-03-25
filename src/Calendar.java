@@ -32,6 +32,7 @@ public class Calendar {
 
         int maxDay = getMonthMaxDay(year, month);
         int countFirstWeekDay = 7- weekDay;
+        int delim = (countFirstWeekDay < 7) ? countFirstWeekDay : 0;
 
         for (int i = 1; i <= countFirstWeekDay; i++){
             System.out.printf("%3d", i);
@@ -40,7 +41,7 @@ public class Calendar {
 
         for (int i = countFirstWeekDay+1; i <= maxDay; i++) {
             System.out.printf("%3d", i);
-            if(i % 7 == countFirstWeekDay) {
+            if(i % 7 == delim) {
                 System.out.println();
             }
         }

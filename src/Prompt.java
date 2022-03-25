@@ -29,6 +29,9 @@ public class Prompt {
             System.out.println("보고싶은 연도를 입력하세요");
             System.out.print("YEAR > ");
             year = sc.nextInt();
+            if (year == -1) {
+                break;
+            }
             System.out.println("보고싶은 월을 입력하세요");
             System.out.print("MONTH > ");
             month = sc.nextInt();
@@ -39,9 +42,6 @@ public class Prompt {
 
             int parseWeekDay = parseDay(weekday);
 
-            if (year == -1) {
-                break;
-            }
 
             if (1 <= month && 12 >= month) {
                 cal.printCalendar(year, month, parseWeekDay);
