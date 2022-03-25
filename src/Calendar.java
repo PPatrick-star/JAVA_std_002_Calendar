@@ -66,7 +66,7 @@ public class Calendar {
             count += delta;
         }
 
-        count += day -1;
+        count += day;
 
         return (count + STANDARD_WEEKDAY) % 7;
 
