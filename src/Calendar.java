@@ -1,7 +1,36 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class Calendar {
 
     private final int[] DAYS_LIST = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private final int[] LEAP_YEAR_DAYS_LIST = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    private HashMap<Date, String> planMap;
+
+    public Calendar() {
+        planMap = new HashMap<Date, String>();
+    }
+
+    /*
+    * @param : registerDate10 "2022-03-27"
+    * @param : plain
+    * @throws : ParseException
+    * */
+    public void registerPlan(String registerDate, String plan) throws ParseException {
+        Date registerDate10 = new SimpleDateFormat("yyyy-MM-dd").parse(registerDate);
+
+        planMap.put(registerDate10, plan);
+
+    }
+
+    public String searchPlan(String searchDate) throws ParseException {
+        Date searchDate10 = new SimpleDateFormat("yyyy-MM-dd").parse(searchDate);
+
+        return planMap.get(searchDate10);
+    }
 
     public boolean isLeapYear(int year){
         if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
@@ -71,4 +100,16 @@ public class Calendar {
         return (count + STANDARD_WEEKDAY) % 7;
 
     }
+
+/*    public static void main(String [] args) throws ParseException {
+        Calendar c = new Calendar();
+        System.out.println(c.getWeekDay(1970, 1, 1) == 3);
+        System.out.println(c.getWeekDay(1971, 1, 1) == 4);
+        System.out.println(c.getWeekDay(1972, 1, 1) == 5);
+        System.out.println(c.getWeekDay(1973, 1, 1) == 0);
+        System.out.println(c.getWeekDay(1974, 1, 1) == 1);
+
+        c.registerPlan("2022-03-27", "Watch movie");
+        System.out.println(c.searchPlan("2022-03-27").equals("Watch movie"));
+    }*/
 }
