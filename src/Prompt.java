@@ -48,14 +48,28 @@ public class Prompt {
 
         printMenu();
 
-        while (true) {
+        boolean isLoop = true;
+        while (isLoop) {
             System.out.println("명령 : 1, 2, 3, h, q");
             cmd = sc.next();
-            if (cmd.equals("1")) cmdRegister(sc, cal);
-            else if (cmd.equals("2")) cmdSearch(sc, cal);
-            else if (cmd.equals("3")) cmdCal(sc, cal);
-            else if (cmd.equals("h")) cmdHelp(sc, cal);
-            else if (cmd.equals("q")) break;
+
+            switch (cmd) {
+                case "1":
+                    cmdRegister(sc, cal);
+                    break;
+                case "2":
+                    cmdSearch(sc, cal);
+                    break;
+                case "3":
+                    cmdCal(sc, cal);
+                    break;
+                case "h":
+                    cmdHelp(sc, cal);
+                    break;
+                case "q":
+                    isLoop = false;
+                    break;
+            }
 
         }
 
