@@ -1,5 +1,3 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -8,31 +6,29 @@ public class Calendar {
     private final int[] DAYS_LIST = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private final int[] LEAP_YEAR_DAYS_LIST = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    private HashMap<Date, String> planMap;
+    private HashMap<Date, PlanItem> planMap;
 
     public Calendar() {
-        planMap = new HashMap<Date, String>();
+        planMap = new HashMap<Date, PlanItem>();
     }
 
     /*
-    * @param : registerDate10 "2022-03-27"
-    * @param : plain
-    * @throws : ParseException
-    * */
-    public void registerPlan(String registerDate, String plan) throws ParseException {
-        Date registerDate10 = new SimpleDateFormat("yyyy-MM-dd").parse(registerDate);
-
-        planMap.put(registerDate10, plan);
+     * @param : registerDate10 "2022-03-27"
+     * @param : plain
+     * @throws : ParseException
+     * */
+    public void registerPlan(String registerDate, String plan) {
+        PlanItem pi = new PlanItem(registerDate, plan);
+        planMap.put(pi.getPlanDate(), pi);
 
     }
 
-    public String searchPlan(String searchDate) throws ParseException {
-        Date searchDate10 = new SimpleDateFormat("yyyy-MM-dd").parse(searchDate);
-
+    public PlanItem searchPlan(String searchDate) {
+        Date searchDate10 = PlanItem.getSearchDateFromString(searchDate);
         return planMap.get(searchDate10);
     }
 
-    public boolean isLeapYear(int year){
+    public boolean isLeapYear(int year) {
         if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
             return true;
         else
@@ -40,7 +36,7 @@ public class Calendar {
     }
 
     public int getMonthMaxDay(int year, int month) {
-        if (isLeapYear(year)){
+        if (isLeapYear(year)) {
             return LEAP_YEAR_DAYS_LIST[month];
         } else {
             return DAYS_LIST[month];
@@ -48,7 +44,7 @@ public class Calendar {
 
     }
 
-    public void printCalendar(int year,int month) {
+    public void printCalendar(int year, int month) {
         System.out.println("---------------------");
         System.out.printf("   <<%4d년 %2d월>> \n", year, month);
 
@@ -57,22 +53,22 @@ public class Calendar {
 
         int weekDay = getWeekDay(year, month, 1);
 
-        for (int i = 0; i < weekDay; i++){
+        for (int i = 0; i < weekDay; i++) {
             System.out.print("   ");
         }
 
         int maxDay = getMonthMaxDay(year, month);
-        int countFirstWeekDay = 7- weekDay;
+        int countFirstWeekDay = 7 - weekDay;
         int delim = (countFirstWeekDay < 7) ? countFirstWeekDay : 0;
 
-        for (int i = 1; i <= countFirstWeekDay; i++){
+        for (int i = 1; i <= countFirstWeekDay; i++) {
             System.out.printf("%3d", i);
         }
         System.out.println();
 
-        for (int i = countFirstWeekDay+1; i <= maxDay; i++) {
+        for (int i = countFirstWeekDay + 1; i <= maxDay; i++) {
             System.out.printf("%3d", i);
-            if(i % 7 == delim) {
+            if (i % 7 == delim) {
                 System.out.println();
             }
         }
@@ -85,12 +81,12 @@ public class Calendar {
 
         int count = 0;
 
-        for (int i = standardYear; i < year; i ++) {
+        for (int i = standardYear; i < year; i++) {
             int delta = isLeapYear(i) ? 366 : 365;
             count += delta;
         }
 
-        for (int i = 1; i < month; i ++) {
+        for (int i = 1; i < month; i++) {
             int delta = getMonthMaxDay(year, i);
             count += delta;
         }
