@@ -1,15 +1,34 @@
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Calendar {
 
     private final int[] DAYS_LIST = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private final int[] LEAP_YEAR_DAYS_LIST = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    private HashMap<Date, PlanItem> planMap;
+    private static final String SAVE_FILE = "calendar.dat";
+    private final HashMap<Date, PlanItem> planMap;
 
     public Calendar() {
         planMap = new HashMap<Date, PlanItem>();
+        File file = new File(SAVE_FILE);
+        if ( !file.exists())
+            return ;
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNext()) {
+                String line = sc.nextLine();
+                String[] words = line.split(",");
+                String date = words[0];
+                String detail = words[1].replaceAll("\"", "");
+                PlanItem pi = new PlanItem(date, detail);
+                planMap.put(pi.getPlanDate(), pi);
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -20,6 +39,17 @@ public class Calendar {
     public void registerPlan(String registerDate, String plan) {
         PlanItem pi = new PlanItem(registerDate, plan);
         planMap.put(pi.getPlanDate(), pi);
+
+        File file = new File(SAVE_FILE);
+        String item = pi.saveString();
+        try {
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(item);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

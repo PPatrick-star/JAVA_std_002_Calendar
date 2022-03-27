@@ -82,7 +82,7 @@ public class Prompt {
 
     private void cmdSearch(Scanner sc, Calendar cal) {
         System.out.println("[일정 검색]");
-        System.out.println("날짜를 입력해주세요 (yyy-MM-dd)");
+        System.out.println("날짜를 입력해주세요 (yyyy-MM-dd)");
         String searchDate = sc.next();
 
         PlanItem searchPlan = null;
