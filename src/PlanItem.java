@@ -29,4 +29,10 @@ public class PlanItem {
     public Date getPlanDate() {
         return planDate;
     }
+
+    public String saveString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String stringDate = formatter.format(planDate);
+        return stringDate + "," + "\"" + detail + "\"" + "\n";
+    }
 }
